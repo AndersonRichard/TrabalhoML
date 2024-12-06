@@ -1,67 +1,90 @@
-# Triplane-Gaussian Splatting (TGS)
+# 🖼️ **Triplane-Gaussian Splatting (TGS)**  
 
-## 🚀 **Introdução**
-A reconstrução 3D a partir de imagens é uma área de pesquisa em rápido desenvolvimento, impulsionada pelos avanços em modelos generativos. O projeto **Triplane-Gaussian Splatting (TGS)** propõe uma abordagem inovadora para reconstrução 3D a partir de uma única imagem. Este método utiliza uma representação híbrida **Triplane-Gaussian**, que combina rapidez e qualidade de renderização, superando limitações de técnicas anteriores, como o **Score Distillation Sampling (SDS)** e modelos de difusão.
+### 🚀 **Uma Nova Abordagem para Reconstrução 3D a Partir de Imagens**
+
+O **Triplane-Gaussian Splatting (TGS)** é um método inovador que promete revolucionar a reconstrução 3D a partir de imagens 2D. Utilizando um sistema baseado em **transformadores** e uma representação híbrida chamada **Triplane-Gaussian**, ele oferece alta qualidade visual e rapidez incomparável. 
 
 ---
 
-## ✨ **Resumo**
-O **TGS** é baseado em duas redes transformadoras: 
-- Um **Decodificador de Nuvem de Pontos**.
-- Um **Decodificador Triplane**.
 
-Essas redes geram representações 3D híbridas a partir de tokens de recursos extraídos de imagens 2D e parâmetros de câmera.  
-A combinação das saídas das redes, por meio de um **Codificador Gaussiano**, permite a renderização eficiente de visualizações 3D detalhadas.
+## 🖥️ **Introdução**
+A reconstrução 3D de objetos ou cenas a partir de uma única imagem é um desafio significativo em **Visão Computacional**. Embora avanços recentes tenham sido feitos com modelos como **Score Distillation Sampling (SDS)** e técnicas de difusão, essas abordagens frequentemente sofrem com processos de otimização lentos e dependentes de renderização iterativa.  
 
-> **Resultados**: Testes realizados com datasets sintéticos e imagens reais demonstram que o **TGS** alcança maior qualidade e menor tempo de execução em comparação com técnicas de estado da arte.
+O **TGS** resolve esses problemas utilizando duas redes transformadoras que trabalham juntas:  
+1. **Decodificador de Nuvem de Pontos**: Cria uma representação inicial dos objetos em 3D.  
+2. **Decodificador Triplane**: Refina a geometria do objeto com uma estrutura tridimensional mais detalhada.  
+
+O resultado é um modelo híbrido que combina velocidade de processamento e qualidade visual, ideal para aplicações em tempo real.  
+
+---
+
+## 📘 **Resumo Técnico**
+O **TGS** utiliza uma **representação híbrida Triplane-Gaussian** para reconstruir objetos tridimensionais.  
+- **Triplane**: são uma forma de representação explícita de objetos 3D que utiliza três planos ortogonais (XY, XZ e YZ) para armazenar informações espaciais, como densidade ou cor.
+- **Gaussian**: é uma técnica mais recente e implícita, que representa uma cena ou objeto como uma coleção de distribuições gaussianas posicionadas em 3D. Essas distribuições são usadas para renderizar diretamente imagens e reconstruir a geometria.
+
+### Principais Características
+- **Eficiência**: Reconstrução direta via inferência (feed-forward).  
+- **Rapidez**: Elimina otimizações iterativas, reduzindo o tempo de processamento.  
+- **Generalização**: Treinado em datasets sintéticos e adaptável a imagens reais.  
 
 ---
 
 ## 🛠️ **Metodologia**
-### **Fluxo Geral**
-1. **Entrada**:  
-   - Imagem 2D e parâmetros de câmera.  
-   - A imagem é processada por um **Vision Transformer (ViT)**, gerando tokens latentes.
 
-2. **Decodificadores 3D**:  
-   - **Decodificador de Nuvem de Pontos**:  
-     - Gera uma nuvem de pontos inicial, densificada com a técnica de **Projection-Aware Condition (P.C.)**.
-   - **Decodificador Triplane**:  
-     - Cria três planos estruturais (x, y, z), refinados com **Encoding Geometry-Aware (G.E.)**.
+### 🔄 **Fluxo de Trabalho**
+1. **Entrada**:  
+   - Imagem 2D e parâmetros da câmera.  
+   - A imagem é processada por um **Vision Transformer (ViT)**, extraindo tokens de recursos latentes.  
+
+2. **Decodificação**:  
+   - **Nuvem de Pontos**:  
+     - Reconstrói pontos 3D com **Projection-Aware Condition (P.C.)** para densificação.  
+   - **Triplane**:  
+     - Gera três planos (x, y, z) com auxílio de **Geometry-Aware Encoding (G.E.)**.  
 
 3. **Representação Híbrida**:  
-   - Combinação da nuvem de pontos com os planos para formar a **Triplane-Gaussian Representation**, otimizando qualidade e velocidade.
+   - Combina os resultados da Nuvem de Pontos e do Triplane para formar a **Triplane-Gaussian Representation**.  
 
-4. **Renderização Final**:  
-   - Os **Gaussians 3D** são usados para gerar visualizações detalhadas e realistas.
+4. **Renderização**:  
+   - Usa um **Gaussian Decoder** para criar visualizações 3D de alta qualidade.  
 
----
-
-## 📊 **Resultados**
-### **Qualitativos**  
-- **Dataset Google Scanned Objects (GSO)**:  
-  Superioridade do **TGS** em relação a métodos como **Zero-1-2-3** e **One-2-3-45**, na precisão geométrica e textural.
-
-### **Quantitativos**  
-- **Tempo de Execução**:  
-  Redução significativa em comparação a métodos baseados em otimização iterativa, como o **NeRF**, mantendo qualidade visual elevada.
-
-### **Experimentos de Ablation**
-- Comparação de Representações 3D:  
-  - Gaussian, Triplane-NeRF e Triplane-Gaussian.  
-- Avaliação de Componentes:
-  - Impacto das técnicas **P.C.** e **G.E.** na densificação e alinhamento geométrico.
+### 📊 **Comparação de Desempenho**
+- Redução significativa do tempo de processamento em relação a métodos como **NeRF**.  
+- Qualidade visual comparável ou superior, adaptando-se tanto a objetos sintéticos quanto reais.  
 
 ---
 
-## 🧩 **Como Utilizar**
-Baixe o modelo **model_lvis_rel.ckpt** diretamente do repositório no Hugging Face ou integre-o em seus scripts Python:
+## 📈 **Resultados**
 
-```python
-from huggingface_hub import hf_hub_download
-MODEL_CKPT_PATH = hf_hub_download(
-    repo_id="VAST-AI/TriplaneGaussian",
-    filename="model_lvis_rel.ckpt",
-    repo_type="model"
-)
+### **Comparações Qualitativas e Quantitativas**
+- **Dataset GSO (Google Scanned Objects)**:  
+  O TGS supera modelos como **Zero-1-2-3** e **One-2-3-45**, especialmente em detalhes geométricos e texturais.  
 
+### **Estudos de Ablation**
+- **Representações Testadas**:  
+  - Gaussian, Triplane-NeRF, e Triplane-Gaussian.  
+  - Melhor equilíbrio entre qualidade e velocidade foi alcançado com Triplane-Gaussian.  
+
+- **Impacto de Componentes-Chave**:  
+  - **Projection-Aware Condition (P.C.)**: Aumenta a densidade e precisão da nuvem de pontos.  
+  - **Geometry-Aware Encoding (G.E.)**: Refina a integração entre nuvem de pontos e planos.  
+
+---
+
+## 🛠️ **Como Usar**
+
+### **Requisitos**
+- **Linguagem**: Python 3.8 ou superior.  
+- **Bibliotecas Necessárias**:  
+  - huggingface_hub  
+  - pytorch  
+  - numpy  
+  - matplotlib  
+
+### **Instalação e Execução**
+
+1. Clone este repositório:  
+   ```bash
+   git clone https://github.com/VAST-AI/TriplaneGaussian.git
+   cd TriplaneGaussian
