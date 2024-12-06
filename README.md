@@ -88,3 +88,34 @@ O **TGS** utiliza uma **representação híbrida Triplane-Gaussian** para recons
    ```bash
    git clone https://github.com/VAST-AI/TriplaneGaussian.git
    cd TriplaneGaussian
+
+2. Instale as dependências:
+   pip install -r requirements.txt
+
+3. Baixe o modelo:
+   from huggingface_hub import hf_hub_download
+   MODEL_CKPT_PATH = hf_hub_download(
+    repo_id="VAST-AI/TriplaneGaussian",
+    filename="model_lvis_rel.ckpt",
+    repo_type="model"
+   )
+   
+5. Execute o exemplo de reconstrução:
+   python demo.py --input_image example.jpg --camera_params params.json
+
+🔗 Links Úteis
+
+* Página do Projeto
+* Artigo no ArXiv
+* Código Fonte
+
+👥 Autores e Colaborações
+Este trabalho foi desenvolvido por:
+
+* Zi-Xin Zou
+* Zhipeng Yu
+* Yuan-Chen Guo
+* Yangguang Li
+* Ding Liang
+* Yan-Pei Cao
+* Song-Hai Zhang
