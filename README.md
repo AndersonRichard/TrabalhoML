@@ -103,11 +103,12 @@ O **TGS** utiliza uma **representação híbrida Triplane-Gaussian** para recons
 5. Execute o exemplo de reconstrução:
    python demo.py --input_image example.jpg --camera_params params.json
 
-🔗 Links Úteis
+## 🔗 Links Úteis
 
-* Página do Projeto
-* Artigo no ArXiv
-* Código Fonte
+- [Página do Projeto](https://huggingface.co/VAST-AI/TriplaneGaussian)
+- [Artigo no ArXiv](https://doi.org/10.48550/arXiv.2312.09147)
+- [Código Fonte](https://github.com/VAST-AI-Research/TriplaneGaussian)
+
 
 👥 Autores e Colaborações
 Este trabalho foi desenvolvido por:
